@@ -310,6 +310,7 @@
         .getElementById("infoForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
+
           // Lấy giá trị của tên và số điện thoại
           const name = document.getElementById("nameInput").value;
           const phone = document.getElementById("phoneInput").value;
@@ -328,6 +329,9 @@
           );
           myModal.show();
 
+          // Lưu giá trị của name vào biến toàn cục để dùng sau
+          window.inviteeName = name;
+
           // Xóa dữ liệu trong form
           document.getElementById("infoForm").reset();
         });
@@ -336,13 +340,44 @@
       document
         .getElementById("downloadButton")
         .addEventListener("click", function () {
-          // Tạo một thẻ <a> ẩn để tải ảnh
-          const link = document.createElement("a");
-          link.href = "b.png"; // Đường dẫn đến hình ảnh bạn muốn tải
-          link.download = "b.png"; // Tên file ảnh sẽ tải về
-          document.body.appendChild(link);
-          link.click();
-          document.body.removeChild(link);
+          // Lấy giá trị của tên đã lưu trước đó
+          const name = window.inviteeName;
+
+          // Tạo đối tượng hình ảnh
+          const img = new Image();
+          img.src = "c.png"; // Đường dẫn đến hình ảnh của bạn
+
+          img.onload = function () {
+            // Tạo canvas có kích thước bằng với hình ảnh
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+
+            // Vẽ hình ảnh lên canvas
+            ctx.drawImage(img, 0, 0);
+
+            // Thêm đoạn "${name} ơi!" lên canvas
+            ctx.font = "80pt NewFont"; // Font và kích thước chữ
+            ctx.fillStyle = "#36b1ad"; // Màu của chữ
+            ctx.fillText(`${name} ơi!`, 470, 380); // Văn bản và vị trí của nó trên ảnh
+
+            ctx.font = "45pt NewFont"; // Font và kích thước chữ
+            ctx.fillStyle = "#ff0298"; // Màu của chữ
+            ctx.fillText(`${name} có hẹn với Lọ Lem nè!`, 350, 450); // Văn bản và vị trí của nó trên ảnh
+
+
+            // Chuyển canvas thành URL hình ảnh
+            const image = canvas.toDataURL("image/jpeg", 1.0);
+
+            // Tạo thẻ <a> để tải ảnh
+            const link = document.createElement("a");
+            link.href = image;
+            link.download = "invitation_edited.jpg"; // Tên file ảnh sẽ tải về
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          };
         });
 
       // Xử lý sự kiện cho nút chia sẻ FB

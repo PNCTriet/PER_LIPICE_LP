@@ -1,15 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-            rel="stylesheet" />
-        <title>Landing Page</title>
-        <style>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <title>Landing Page</title>
+    <style>
+      /* Font-face declarations for custom fonts */
+      @font-face {
+        font-family: "MyFont"; /* Custom font name */
+        src: url("fonts/Matahari-700Bold.ttf") format("truetype"); /* Path to the font file */
+      }
+
+      @font-face {
+        font-family: "NewFont"; /* New custom font name */
+        src: url("fonts/Matahari-800ExtraBold.ttf") format("truetype"); /* Path to the new font file */
+      }
+
       body {
-        font-family: Arial, sans-serif;
+        font-family: "NewFont", sans-serif; /* Apply new custom font */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -33,24 +45,146 @@
         padding: 10px;
         width: 90%;
         height: 55px;
-        border: none; /* Bỏ viền */
-        background-color: #f0f0f0; /* Màu xám nhạt */
+        border: none; /* Remove border */
+        background-color: #f0f0f0; /* Light gray background */
         border-radius: 5px;
         display: block;
-        font-size: 15px; /* Thay đổi cỡ chữ trong input */
+        font-size: 15px; /* Font size in input */
       }
 
+      /* Button style */
       button {
-        padding: 15px 30px; /* Làm to button */
-        background-color: #28a745;
-        color: white;
-        border: none;
-        border-radius: 5px;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        padding: 10px;
+        background-color: white;
         cursor: pointer;
-        margin: 20px auto; /* Căn giữa với khoảng cách trên dưới */
-        width: 100%; /* Chỉnh lại width giống input */
-        height: 55px;
-        font-size: 15px;
+        box-shadow: 4px 6px 0px #0026a4;
+        border: 4px solid #0026a4;
+        border-radius: 15px;
+        position: relative;
+        overflow: hidden;
+        z-index: 100;
+        transition: box-shadow 250ms, transform 250ms, filter 50ms;
+      }
+
+      button#downloadButton,
+      button#shareButton {
+        font-size: 2vw; /* Responsive font size */
+        font-family: "NewFont", sans-serif; /* Apply custom font */
+        width: 35vw; /* Tính tỷ lệ width dựa trên viewport width */
+        height: calc(
+          35vw * 73 / 262
+        ); /* Giữ tỷ lệ chiều cao so với chiều rộng */
+        max-width: 262px; /* Giới hạn tối đa là 262px */
+        max-height: 73px; /* Giới hạn tối đa là 73px */
+        min-width: 130px; /* Giới hạn tối thiểu là 130px */
+        min-height: calc(130px * 73 / 262); /* Tỷ lệ tối thiểu cho height */
+      }
+
+      button#downloadButton {
+        color: #0026a4;
+      }
+
+      button#shareButton {
+        background-color: #0026a4;
+        box-shadow: 4px 6px 0px white, 4px 6px 0px 4px #0026a4; /* Bóng trắng nằm trên, viền xanh nằm dưới */
+        border: 4px solid #0026a4;
+        color: white;
+      }
+
+      button:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 3px 0px #0026a4;
+      }
+
+      button:active {
+        filter: saturate(0.75);
+      }
+
+      button::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: white;
+        z-index: -1;
+        transform: translateX(-100%);
+        transition: transform 250ms;
+      }
+
+      button#shareButton::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: #0026a4;
+        z-index: -1;
+        transform: translateX(-100%);
+        transition: transform 250ms;
+      }
+
+      button:hover::after {
+        transform: translateX(0);
+      }
+
+      .bgContainer {
+        position: relative;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        overflow: hidden;
+        max-width: 50%; /* Adjust based on button text */
+        font-size: 1.5em;
+        font-weight: 600;
+      }
+
+      .bgContainer span {
+        position: relative;
+        transform: scale(1);
+        transition: transform 250ms;
+      }
+
+      .button:hover .bgContainer > span {
+        transform: scale(1.1); /* Slight scale on hover */
+      }
+
+      .arrowContainer {
+        padding: 1em;
+        margin-inline-end: 1em;
+        border: 4px solid;
+        border-radius: 50%;
+        background-color: #ff7be3;
+        position: relative;
+        overflow: hidden;
+        transition: transform 250ms, background-color 250ms;
+        z-index: 100;
+      }
+
+      .arrowContainer::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background-color: white;
+        transform: translateX(-100%);
+        z-index: -1;
+        transition: transform 250ms ease-in-out;
+      }
+
+      button:hover .arrowContainer::after {
+        transform: translateX(0);
+      }
+
+      button:hover .arrowContainer {
+        transform: translateX(5px);
+      }
+
+      button:active .arrowContainer {
+        transform: translateX(8px);
+      }
+
+      .arrowContainer svg {
+        vertical-align: middle;
       }
 
       #invitation {
@@ -60,129 +194,122 @@
         color: #333;
       }
 
-      /* CSS cho modal */
+      /* Modal style */
       .modal-content {
-        background-image: url("./b.png"); /* Thay bằng đường dẫn đến hình nền bạn muốn */
+        background-image: url("./b.png"); /* Background image for modal */
         background-size: cover;
         width: 100%;
         height: 0;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio (9/16 = 56.25%) */
+        padding-bottom: 56.25%; /* Maintain 16:9 aspect ratio */
         position: relative;
       }
 
       .modal-dialog {
-        max-width: 90vw; /* Chiều rộng tối đa của modal */
-        max-height: 50.625vw; /* Chiều cao dựa trên tỉ lệ 16:9 */
+        max-width: 90vw; /* Max width of modal */
+        max-height: 50.625vw; /* Height based on 16:9 ratio */
       }
 
       .modal-body {
         display: flex;
-        /*justify-content: center; /* Căn giữa theo chiều ngang */
-        align-items: center; /* Căn giữa theo chiều dọc */
-        height: 100%; /* Đảm bảo nội dung bao phủ toàn bộ chiều cao của modal */
+        align-items: center; /* Center vertically */
+        height: 100%; /* Full height */
         padding: 1rem;
-        
-    }
-    
-    p#invitationMessage {
-        font-size: 80pt; /* Kích thước chữ */
-        text-align: left; /* Căn trái cho text */
-        position: absolute; /* Đặt vị trí tuyệt đối để chồng lên nhau */
-        top: 470%; /* Dịch chuyển xuống dưới */
-        left: 25%; /* Dịch chuyển sang bên trái */
+      }
+
+      p#invitationMessage {
+        font-size: 80pt; /* Font size */
+        text-align: left;
+        position: absolute;
+        top: 470%; /* Move down */
+        left: 25%; /* Move left */
         color: #36b1ad;
-        z-index: 1; /* Đặt z-index để phần tử này ở trên */
-    }
-    
-    p#invitationMessage2 {
-        font-size: 35pt; /* Kích thước chữ */
-        text-align: left; /* Căn trái cho text */
-        position: absolute; /* Đặt vị trí tuyệt đối để chồng lên nhau */
-        top: 820%; /* Dịch chuyển xuống dưới */
-        left: 17.6%; /* Dịch chuyển sang bên trái */
+        z-index: 1; /* Ensure it's on top */
+      }
+
+      p#invitationMessage2 {
+        font-size: 35pt;
+        text-align: left;
+        position: absolute;
+        top: 820%; /* Move down */
+        left: 17.6%; /* Move left */
         color: #ff0298;
         font-weight: bold;
-        z-index: 0; /* Đặt z-index thấp hơn để phần tử này ở dưới */
-    }
-
-    @font-face {
-        font-family: 'MyFont'; /* Tên tùy chỉnh cho font */
-        src: url('fonts/Matahari-700Bold.ttf') format('truetype'); /* Đường dẫn tới file font */
-    }
-    
-    body {
-        font-family: 'MyFont', sans-serif; /* Sử dụng font vừa thêm */
-    }
-    
-    
+        z-index: 0; /* Below the first message */
+      }
     </style>
-    </head>
-    <body>
-        <div class="containerr">
-            <h1>Tên mình là:</h1>
-            <form id="infoForm">
-                <input
-                    type="text"
-                    id="nameInput"
-                    placeholder="Nhập tên của bạn..."
-                    required
-                    class="form-control mb-3" />
-                <h1>SĐT của mình:</h1>
-                <input
-                    type="text"
-                    id="phoneInput"
-                    placeholder="Nhập số điện thoại của bạn..."
-                    required
-                    class="form-control mb-3" />
-                <button type="submit" class="button">
-                    Nhận thiệp mời từ Lọ Lem nha!
-                </button>
-            </form>
+  </head>
+  <body>
+    <div class="containerr">
+      <h1>Tên mình là:</h1>
+      <form id="infoForm">
+        <input
+          type="text"
+          id="nameInput"
+          placeholder="Nhập tên của bạn..."
+          required
+          class="form-control mb-3"
+        />
+        <h1>SĐT của mình:</h1>
+        <input
+          type="text"
+          id="phoneInput"
+          placeholder="Nhập số điện thoại của bạn..."
+          required
+          class="form-control mb-3"
+        />
+        <button type="submit" class="button">
+          Nhận thiệp mời từ Lọ Lem nha!
+        </button>
+      </form>
+    </div>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="invitationModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title visually-hidden" id="exampleModalLabel">
+              Thiệp mời
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+
+          <div class="modal-body">
+            <p id="invitationMessage"></p>
+            <p id="invitationMessage2"></p>
+          </div>
+          <div class="modal-footer">
+            <!-- <button id="downloadButton" class="btn btn-primary">
+              
+            </button> -->
+
+            <button class="button" id="downloadButton">Download</button>
+            <button class="button" id="shareButton">Share</button>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Modal -->
-        <div
-            class="modal fade"
-            id="invitationModal"
-            tabindex="-1"
-            aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-xl">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title visually-hidden"
-                            id="exampleModalLabel">
-                            Thiệp mời
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            data-bs-dismiss="modal"
-                            aria-label="Close"></button>
-                    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
-                    <div class="modal-body">
-                        <p id="invitationMessage"></p>
-                        <p id="invitationMessage2"></p>
-                    </div>
-                    <!-- <div class="modal-footer">
-                        <button id="downloadButton" class="btn btn-primary">Tải về JPEG</button>
-                        <button id="shareButton" class="btn btn-info">Chia sẻ FB</button>
-                    </div> -->
-                </div>
-            </div>
-        </div>
-
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-        <script>
+    <script>
       // Xử lý sự kiện submit form
       document
         .getElementById("infoForm")
         .addEventListener("submit", function (e) {
           e.preventDefault();
-
           // Lấy giá trị của tên và số điện thoại
           const name = document.getElementById("nameInput").value;
           const phone = document.getElementById("phoneInput").value;
@@ -190,11 +317,10 @@
           // Hiển thị thông điệp trong modal
           document.getElementById(
             "invitationMessage"
-          ).innerText = `${name} ơi !`;
+          ).innerText = `${name} ơi!`;
           document.getElementById(
             "invitationMessage2"
-          ).innerText = `${name} có hẹn với Lọ Lem nè !`;
-          
+          ).innerText = `${name} có hẹn với Lọ Lem nè!`;
 
           // Hiển thị modal
           var myModal = new bootstrap.Modal(
@@ -210,8 +336,13 @@
       document
         .getElementById("downloadButton")
         .addEventListener("click", function () {
-          // Logic tải về dưới dạng JPEG (cần thêm thư viện hoặc logic cụ thể để thực hiện)
-          alert("Tính năng tải về đang được phát triển!");
+          // Tạo một thẻ <a> ẩn để tải ảnh
+          const link = document.createElement("a");
+          link.href = "b.png"; // Đường dẫn đến hình ảnh bạn muốn tải
+          link.download = "b.png"; // Tên file ảnh sẽ tải về
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
         });
 
       // Xử lý sự kiện cho nút chia sẻ FB
@@ -225,5 +356,5 @@
           window.open(shareUrl, "_blank");
         });
     </script>
-    </body>
+  </body>
 </html>

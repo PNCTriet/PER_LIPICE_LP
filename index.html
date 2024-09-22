@@ -448,6 +448,43 @@
         .catch((error) => {
           console.error('Error:', error);
           alert("Có lỗi xảy ra khi gửi dữ liệu!");
+          // Nếu lưu thành công, tiếp tục tạo hình ảnh
+          const img = new Image();
+          img.src = "c.png"; // Đường dẫn đến hình ảnh của bạn
+
+          img.onload = function() {
+            const canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext("2d");
+
+            // Vẽ hình ảnh lên canvas
+            ctx.drawImage(img, 0, 0);
+
+            // Thêm đoạn "${name} ơi!" lên canvas
+            ctx.font = "115pt NewFont";
+            ctx.fillStyle = "#36b1ad";
+            ctx.fillText(`${name} ơi!`, 335, 430);
+
+            ctx.font = "60pt NewFont";
+            ctx.fillStyle = "#ff0298";
+            ctx.fillText(`${name} có hẹn với Lọ Lem nè!`, 180, 535);
+
+            // Chuyển canvas thành URL hình ảnh
+            const image = canvas.toDataURL("image/png", 1.0);
+
+            // Hiển thị hình ảnh trong modal
+            document.getElementById("invitationImage").src = image;
+
+            // Hiển thị modal
+            var myModal = new bootstrap.Modal(document.getElementById("invitationModal"));
+            myModal.show();
+
+            // Lưu giá trị của name để dùng sau
+            window.inviteeName = name;
+
+            // Xóa dữ liệu trong form
+            document.getElementById("infoForm").reset();
         });
     });
 

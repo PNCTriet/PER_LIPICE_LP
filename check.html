@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thiếp Mời</title>
+    <script>
+        function generateInvitation() {
+            const name = document.getElementById('nameInput').value;
+            if (name) {
+                // Tạo URL riêng cho thiếp mời
+                const invitationUrl = `${window.location.origin}/invitation.html?name=${encodeURIComponent(name)}`;
+                
+                // Hiển thị thiếp mời
+                const invitationCard = document.getElementById('invitationCard');
+                invitationCard.innerHTML = `<h2>Thiếp Mời cho ${name}</h2><p>Chào mừng bạn đến với sự kiện của chúng tôi!</p>`;
+                invitationCard.style.display = 'block';
+
+                // Cập nhật nút chia sẻ
+                const shareButton = document.getElementById('shareButton');
+                shareButton.setAttribute('onclick', `shareToFacebook('${invitationUrl}')`);
+                shareButton.style.display = 'inline-block';
+            }
+        }
+
+        function shareToFacebook(invitationUrl) {
+            const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(invitationUrl)}`;
+            window.open(facebookShareUrl, '_blank');
+        }
+    </script>
+    <style>
+        #invitationCard {
+            display: none;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Nhập Tên Của Bạn</h1>
+    <input type="text" id="nameInput" placeholder="Nhập tên của bạn">
+    <button onclick="generateInvitation()">Tạo Thiếp Mời</button>
+
+    <div id="invitationCard"></div>
+    <button id="shareButton" style="display: none;">Chia sẻ trên Facebook</button>
+</body>
+</html>

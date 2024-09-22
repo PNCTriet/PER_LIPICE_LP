@@ -34,7 +34,7 @@
       justify-content: center;
       align-items: center;
       height: 100vh;
-      background-image: url("./a.png");
+      background-image: url("./images/a.png");
       background-size: cover;
       background-position: center;
       overflow: hidden;
@@ -253,7 +253,7 @@
     }
 
     .modal-content {
-      background-image: url("./bg.png");
+      background-image: url("./images/bg.png");
       background-size: cover;
       position: relative;
       overflow: hidden;
@@ -405,7 +405,7 @@
           if (data.status === 'success') {
             // Nếu lưu thành công, tiếp tục tạo hình ảnh
             const img = new Image();
-            img.src = "c.png"; // Đường dẫn đến hình ảnh của bạn
+            img.src = "./images/c.png"; // Đường dẫn đến hình ảnh của bạn
 
             img.onload = function() {
               const canvas = document.createElement("canvas");
@@ -447,10 +447,10 @@
         })
         .catch((error) => {
           console.error('Error:', error);
-          alert("Có lỗi xảy ra khi gửi dữ liệu!");
+          alert("Có lỗi xảy ra khi gửi dữ liệu! (đang phát triển)");
           // Nếu lưu thành công, tiếp tục tạo hình ảnh
           const img = new Image();
-          img.src = "c.png"; // Đường dẫn đến hình ảnh của bạn
+          img.src = "./images/c.png"; // Đường dẫn đến hình ảnh của bạn
 
           img.onload = function() {
             const canvas = document.createElement("canvas");

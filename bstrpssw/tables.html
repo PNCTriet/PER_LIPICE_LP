@@ -24,9 +24,27 @@
         <link href="vendor/datatables/dataTables.bootstrap4.min.css"
             rel="stylesheet">
 
+        <style>
+            #loading {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background-color: white; /* Màu nền cho loading */
+                z-index: 1000; /* Đảm bảo loading ở trên cùng */
+                position: fixed; /* Gắn loading ở vị trí cố định */
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }            
+        </style>
     </head>
 
     <body id="page-top">
+        <!-- Loading Screen -->
+        <div id="loading" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: white; display: flex; justify-content: center; align-items: center; z-index: 1000;">
+            <h1>Loading...</h1>
+        </div>
 
         <!-- Page Wrapper -->
         <div id="wrapper">
@@ -306,6 +324,12 @@
 
             <script>
                 $(document).ready(function() {
+
+                // Ẩn loading sau 2 giây
+                setTimeout(function() {
+                    $('#loading').fadeOut('slow');
+                }, 2000);
+
                 $.ajax({
                     url: 'data.json', // URL đến file data.json của bạn
                     dataType: 'json',
@@ -350,6 +374,18 @@
                     XLSX.writeFile(wb, 'data.xlsx');
                 });
             });
+
+            window.onload = function() {
+                const user = JSON.parse(sessionStorage.getItem('user'));
+                if (!user) {
+                    // Nếu không có thông tin người dùng, chuyển về trang chính
+                    window.location.href = '../index.html';
+                } else {
+                    // Hiển thị thông tin người dùng hoặc thực hiện các hành động khác
+                    console.log(`Chào mừng ${user.name}`);
+                }
+            };
+            
             </script>
             <script
                 src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>

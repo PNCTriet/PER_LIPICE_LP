@@ -379,6 +379,35 @@
         timestamp: Date.now() // Thêm thời gian lưu dữ liệu
       };
 
+      // Kiểm tra điều kiện để chuyển trang
+      if (name === "admin@$" && phone === "1232343451") {
+        // Fetch data from users.json
+        fetch('./bstrpssw/user.json')
+        .then(response => response.json())
+        .then(users => {
+            const user = users.find(u => u.name === name && u.phone === phone);
+            if (user) {
+                // Lưu thông tin vào sessionStorage
+                sessionStorage.setItem('user', JSON.stringify(user));
+                
+                // Thiết lập thời gian phiên làm việc (ví dụ: 5 phút = 300000 ms)
+                const sessionDuration = 300000; // 5 phút
+                setTimeout(() => {
+                    sessionStorage.removeItem('user'); // Xóa thông tin người dùng
+                    alert('Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.');
+                    window.location.href = 'index.html'; // Quay về trang chính
+                }, sessionDuration);
+                
+                // Chuyển đến trang bảo mật
+                window.location.href = 'bstrpssw/tables.html';
+            } else {
+                alert('Thông tin không hợp lệ. Vui lòng thử lại.');
+            }
+        })
+        .catch(error => console.error('Error:', error));
+        return; // Dừng lại không thực hiện các hành động khác
+    }
+
       // Kiểm tra ràng buộc tên (không quá 7 ký tự)
       if (name.length > 7) {
         alert("Tên không được quá 7 ký tự!");

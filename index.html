@@ -31,7 +31,6 @@
     body {
       font-family: "NewFont", sans-serif;
       display: flex;
-      justify-content: center;
       align-items: center;
       height: 100vh;
       background-image: url("./images/a.png");
@@ -41,12 +40,34 @@
       background-repeat: no-repeat;
     }
 
+    .wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
     .containerr {
       background-color: white;
       padding: 20px;
       border-radius: 10px;
-      margin-left: 55%;
-      width: 30%;
+      width: 50%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .form-container {
+      display: flex;
+      align-items: center;
+    }
+
+    .form-content {
+      margin-left: 20px;
+      flex-grow: 1;
+    }
+
+    img {
+      flex-shrink: 0;
     }
 
     input {
@@ -300,18 +321,24 @@
       margin-bottom: 0%;
       margin-top: 2%;
     }
+
   </style>
 </head>
 
 <body>
+  <img src="home.svg" style="margin-left: 0; height: 100vh; width:100vh;" alt="Home Icon" width="800" height="800" />
   <div class="containerr">
-    <h1>Tên mình là:</h1>
-    <form id="infoForm">
-      <input type="text" id="nameInput" placeholder="Nhập tên của bạn..." required class="form-control mb-3" />
-      <h1>SĐT của mình:</h1>
-      <input type="text" id="phoneInput" placeholder="Nhập số điện thoại của bạn..." required class="form-control mb-3" />
-      <button type="submit" class="button">Nhận thiệp mời từ Lọ Lem nha!</button>
-    </form>
+    <div class="form-container">
+      <div class="form-content">
+        <h1>Tên mình là:</h1>
+        <form id="infoForm">
+          <input type="text" id="nameInput" placeholder="Nhập tên của bạn..." required class="form-control mb-3" />
+          <h1>SĐT của mình:</h1>
+          <input type="text" id="phoneInput" placeholder="Nhập số điện thoại của bạn..." required class="form-control mb-3" />
+          <button type="submit" class="button">Nhận thiệp mời từ Lọ Lem nha!</button>
+        </form>
+      </div>
+    </div>
   </div>
 
 

@@ -576,7 +576,7 @@
           }
 
           // Gửi thông tin người dùng đến server
-          fetch("save_data.php", {
+          fetch("./php/save_data.php", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

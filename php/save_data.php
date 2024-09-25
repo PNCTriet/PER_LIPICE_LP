@@ -4,7 +4,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $data = json_decode($jsonData, true);
 
     // Đọc nội dung hiện tại của file data.json
-    $file = './bstrpssw/data.json';
+    $file = '../bstrpssw/data.json';
     if (file_exists($file)) {
         $currentData = json_decode(file_get_contents($file), true);
     } else {

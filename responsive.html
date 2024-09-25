@@ -13,15 +13,17 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: white;
+            background-color: #f0f0f0;
         }
 
         .container {
             display: flex;
             align-items: center;
             background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            height: 100%;;
+            max-width: 800px;
             width: 100%;
         }
 
@@ -80,7 +82,9 @@
 
         .image-container img {
             width: 100%;
+            max-width: 300px;
             height: auto;
+            border-radius: 8px;
             object-fit: cover;
         }
 
@@ -111,10 +115,9 @@
     </style>
 </head>
 <body>
-
     <div class="container">
         <div class="image-container">
-            <img src="home.svg" alt="Placeholder Image">
+            <img src="https://via.placeholder.com/300" alt="Placeholder Image">
         </div>
         <div class="form-container">
             <h2>Responsive Form</h2>

@@ -352,21 +352,23 @@
       .contain {
         display: flex;
         align-items: center;
+        justify-content: center;
         height: 100%;
         width: 100%;
       }
 
       /* Responsive for mobile */
-      @media (max-width: 1100px) {
+      @media (max-width: 700px) and (aspect-ratio: 6/19) {
         #homeimg.himg {
-          width: auto;
           height: 60%;
+          src: url('homemb.svg');
         }
         .contain {
           flex-direction: column;
+          justify-content: center;
         }
         .containerr {
-          height: 40%;
+          height: 100%;
           padding: 5px;
         }
         h1 {
@@ -374,6 +376,37 @@
         }
         .form-container {
           padding: 15px;
+          width: 50%;
+        }
+        input[type="text"] {
+          font-size: 11px;
+        }
+        button#submitButton {
+          padding: 30px;
+        }
+      }
+
+      @media (max-width: 500px) {  
+        #homeimg.himg {
+          height: 50%;
+          src: url('homemb.svg');
+        }
+        .contain {
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          
+        }
+        .containerr {
+          height: 100%;
+          padding: 5px;
+        }
+        h1 {
+          font-size: 20px;
+        }
+        .form-container {
+          padding: 15px;
+          width: 70%;
         }
         input[type="text"] {
           font-size: 11px;
@@ -389,7 +422,7 @@
     <div class="contain">
       <img
         id="homeimg"
-        src="home.svg"
+        src="homemb.svg"
         class="himg"
         alt="Home Icon"
         width="800"

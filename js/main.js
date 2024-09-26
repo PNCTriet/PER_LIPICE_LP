@@ -66,7 +66,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
       if (data.status === "success") {
         // Nếu lưu thành công, tiếp tục tạo hình ảnh
         const img = new Image();
-        img.src = "./images/c.png"; // Đường dẫn đến hình ảnh của bạn
+        img.src = "../images/c.png"; // Đường dẫn đến hình ảnh của bạn
 
         img.onload = function () {
           const canvas = document.createElement("canvas");

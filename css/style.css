@@ -296,7 +296,7 @@
   }
 
   .modal-content {
-    background-image: url("./images/bg.png");
+    background-image: url("../images/bg.png");
     background-size: cover;
     position: relative;
     overflow: hidden;

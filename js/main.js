@@ -87,7 +87,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
           ctx.fillText(`${name} có hẹn với Lọ Lem nè!`, 180, 535);
 
           // Chuyển canvas thành URL hình ảnh
-          const image = canvas.toDataURL("image/jpeg", 0.5);
+          const image = canvas.toDataURL("image/png", 1.0);
 
           // Gửi hình ảnh đến máy chủ
           fetch("../php/upload_image.php", {

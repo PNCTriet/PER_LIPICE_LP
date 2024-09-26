@@ -24,10 +24,13 @@ if (isset($data['name']) && isset($data['imageUrl'])) {
         <meta property="og:image" content="' . htmlspecialchars($imageUrl) . '" />
         <meta property="og:url" content="http://20.189.113.224/share?name=' . urlencode($name) . '&image=' . urlencode($imageUrl) . '" />
         <title>Lời mời từ ' . htmlspecialchars($name) . '</title>
+        <!-- Chuyển hướng ngay lập tức -->
+        <script>
+            window.location.href = "http://20.189.113.224/";
+        </script>
     </head>
     <body>
         <h1>' . htmlspecialchars($name) . ' có hẹn với Lọ Lem!</h1>
-        <img src="' . htmlspecialchars($imageUrl) . '" alt="Invitation Image" />
     </body>
     </html>
     ';

@@ -87,42 +87,22 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
           ctx.fillText(`${name} có hẹn với Lọ Lem nè!`, 180, 535);
 
           // Chuyển canvas thành URL hình ảnh
-          const image = canvas.toDataURL("image/jpeg", 0.5);
+          const image = canvas.toDataURL("image/png", 1.0);
 
-          // Gửi hình ảnh đến máy chủ
-          fetch("../php/upload_image.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ imageData: image }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.status === "success") {
-                const uploadedImageUrl = data.imageUrl;
+          // Hiển thị hình ảnh trong modal
+          document.getElementById("invitationImage").src = image;
 
-                // Lưu URL hình ảnh đã tải lên để sử dụng cho chia sẻ
-                window.uploadedImageUrl = uploadedImageUrl;
+          // Hiển thị modal
+          var myModal = new bootstrap.Modal(
+            document.getElementById("invitationModal")
+          );
+          myModal.show();
 
-                // Hiển thị modal với hình ảnh đã tải lên
-                document.getElementById("invitationImage").src =
-                  uploadedImageUrl;
-                var myModal = new bootstrap.Modal(
-                  document.getElementById("invitationModal")
-                );
-                myModal.show();
+          // Lưu giá trị của name để dùng sau
+          window.inviteeName = name;
 
-                // Xóa dữ liệu form
-                document.getElementById("infoForm").reset();
-              } else {
-                alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
-            });
+          // Xóa dữ liệu trong form
+          document.getElementById("infoForm").reset();
         };
       } else {
         alert("Có lỗi xảy ra khi lưu thông tin!");
@@ -130,7 +110,9 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
     })
     .catch((error) => {
       console.error("Error:", error);
-      alert("Có lỗi xảy ra khi gửi dữ liệu!");
+      alert(
+        "Có lỗi xảy ra khi gửi dữ liệu!"
+      );
     });
 });
 
@@ -148,18 +130,10 @@ document
     document.body.removeChild(link);
   });
 
-  document.getElementById("shareButton").addEventListener("click", function () {
-    const name = window.inviteeName || "bạn";
-    const imageUrl = window.uploadedImageUrl || ""; // Đường dẫn của hình ảnh đã tải lên
-  
-    if (imageUrl) {
-      const customShareUrl = `https://banhcuonniengrang.tech/share?name=${encodeURIComponent(name)}&image=${encodeURIComponent(imageUrl)}`;
-      const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(customShareUrl)}`;
-  
-      // Mở tab mới để chia sẻ nội dung lên Facebook
-      window.open(facebookShareUrl, "_blank");
-    } else {
-      alert("Chưa có hình ảnh để chia sẻ!");
-    }
-  });
-  
+document.getElementById("shareButton").addEventListener("click", function () {
+  const urlToShare = "https://gody.vn/blog/trietnguyenpham7087#ban-do-viet-nam"; // URL muốn chia sẻ
+  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+    urlToShare
+  )}`;
+  window.open(facebookShareUrl, "_blank"); // Mở một tab mới với liên kết chia sẻ
+});

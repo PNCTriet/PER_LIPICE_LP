@@ -7,7 +7,7 @@
             content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content>
         <meta name="author" content>
-
+        <link rel="icon" type="image/png" sizes="64x64" href="../images/metalogo.png" />
         <title>Lipice Admin - Tables</title>
 
         <!-- Custom fonts for this template -->

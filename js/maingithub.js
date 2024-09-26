@@ -41,8 +41,8 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
   }
 
   // Kiểm tra ràng buộc tên (không quá 7 ký tự)
-  if (name.length > 11) {
-    alert("Tên không được quá 11 ký tự!");
+  if (name.length > 7) {
+    alert("Tên không được quá 7 ký tự!");
     return; // Dừng lại nếu tên không hợp lệ
   }
 
@@ -54,7 +54,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
   }
 
   // Gửi thông tin người dùng đến server
-  fetch("../php/save_data.php", {
+  fetch("save_data.php", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -78,11 +78,11 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
           ctx.drawImage(img, 0, 0);
 
           // Thêm đoạn "${name} ơi!" lên canvas
-          ctx.font = "110pt NewFont";
+          ctx.font = "115pt NewFont";
           ctx.fillStyle = "#36b1ad";
           ctx.fillText(`${name} ơi!`, 335, 430);
 
-          ctx.font = "50pt NewFont";
+          ctx.font = "60pt NewFont";
           ctx.fillStyle = "#ff0298";
           ctx.fillText(`${name} có hẹn với Lọ Lem nè!`, 180, 535);
 
@@ -111,8 +111,48 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
     .catch((error) => {
       console.error("Error:", error);
       alert(
-        "Có lỗi xảy ra khi gửi dữ liệu!"
+        "Có lỗi xảy ra khi gửi dữ liệu! (chỉ chạy data khi release website)"
       );
+      // Nếu lưu thành công, tiếp tục tạo hình ảnh
+      const img = new Image();
+      img.src = "./images/c.png"; // Đường dẫn đến hình ảnh của bạn
+
+      img.onload = function () {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+
+        // Vẽ hình ảnh lên canvas
+        ctx.drawImage(img, 0, 0);
+
+        // Thêm đoạn "${name} ơi!" lên canvas
+        ctx.font = "115pt NewFont";
+        ctx.fillStyle = "#36b1ad";
+        ctx.fillText(`${name} ơi!`, 335, 430);
+
+        ctx.font = "60pt NewFont";
+        ctx.fillStyle = "#ff0298";
+        ctx.fillText(`${name} có hẹn với Lọ Lem nè!`, 180, 535);
+
+        // Chuyển canvas thành URL hình ảnh
+        const image = canvas.toDataURL("image/png", 1.0);
+
+        // Hiển thị hình ảnh trong modal
+        document.getElementById("invitationImage").src = image;
+
+        // Hiển thị modal
+        var myModal = new bootstrap.Modal(
+          document.getElementById("invitationModal")
+        );
+        myModal.show();
+
+        // Lưu giá trị của name để dùng sau
+        window.inviteeName = name;
+
+        // Xóa dữ liệu trong form
+        document.getElementById("infoForm").reset();
+      };
     });
 });
 

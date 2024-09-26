@@ -1,8 +1,12 @@
+let savedName = "";
 document.getElementById("infoForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
   const name = document.getElementById("nameInput").value;
   const phone = document.getElementById("phoneInput").value;
+
+  // Lưu tên vào biến cục bộ
+  savedName = name;
 
   // Tạo đối tượng để lưu trữ thông tin
   const userInfo = {
@@ -139,6 +143,7 @@ document
   .getElementById("downloadButton")
   .addEventListener("click", function () {
     const image = document.getElementById("invitationImage").src;
+   
 
     const link = document.createElement("a");
     link.href = image;
@@ -149,17 +154,37 @@ document
   });
 
   document.getElementById("shareButton").addEventListener("click", function () {
-    const name = window.inviteeName || "bạn";
+    const name = window.inviteeName || savedName; // Lấy tên người dùng
     const imageUrl = window.uploadedImageUrl || ""; // Đường dẫn của hình ảnh đã tải lên
   
     if (imageUrl) {
-      const customShareUrl = `https://banhcuonniengrang.tech/share?name=${encodeURIComponent(name)}&image=${encodeURIComponent(imageUrl)}`;
-      const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(customShareUrl)}`;
+      // Gửi yêu cầu đến máy chủ để tạo file HTML mới
+      fetch("../php/createsharepage.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: name, imageUrl: imageUrl }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.status === "success") {
+            const customShareUrl = `http://20.189.113.224/${data.htmlUrl}`;
+            const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(customShareUrl)}`;
   
-      // Mở tab mới để chia sẻ nội dung lên Facebook
-      window.open(facebookShareUrl, "_blank");
+            // Mở tab mới để chia sẻ nội dung lên Facebook
+            window.open(facebookShareUrl, "_blank");
+          } else {
+            alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+          alert("Có lỗi xảy ra khi gửi yêu cầu tạo trang chia sẻ!");
+        });
     } else {
       alert("Chưa có hình ảnh để chia sẻ!");
     }
   });
+  
   

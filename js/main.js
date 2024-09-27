@@ -143,7 +143,6 @@ document
   .getElementById("downloadButton")
   .addEventListener("click", function () {
     const image = document.getElementById("invitationImage").src;
-   
 
     const link = document.createElement("a");
     link.href = image;
@@ -153,38 +152,61 @@ document
     document.body.removeChild(link);
   });
 
-  document.getElementById("shareButton").addEventListener("click", function () {
-    const name = window.inviteeName || savedName; // Lấy tên người dùng
-    const imageUrl = window.uploadedImageUrl || ""; // Đường dẫn của hình ảnh đã tải lên
-  
-    if (imageUrl) {
-      // Gửi yêu cầu đến máy chủ để tạo file HTML mới
-      fetch("../php/createsharepage.php", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ name: name, imageUrl: imageUrl }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.status === "success") {
-            const customShareUrl = `http://20.189.113.224/${data.htmlUrl}`;
-            const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(customShareUrl)}`;
-  
-            // Mở tab mới để chia sẻ nội dung lên Facebook
-            window.open(facebookShareUrl, "_blank");
-          } else {
-            alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
-          }
-        })
-        .catch((error) => {
-          console.error("Error:", error);
-          alert("Có lỗi xảy ra khi gửi yêu cầu tạo trang chia sẻ!");
-        });
-    } else {
-      alert("Chưa có hình ảnh để chia sẻ!");
-    }
+// Đảm bảo rằng Facebook SDK đã được thêm vào trang
+window.fbAsyncInit = function () {
+  FB.init({
+    appId: "1047271863230415", // Thay bằng App ID của bạn từ Facebook Developer
+    xfbml: true,
+    version: "v13.0", // Phiên bản của SDK
   });
-  
-  
+};
+
+document.getElementById("shareButton").addEventListener("click", function () {
+  const name = window.inviteeName || savedName; // Lấy tên người dùng
+  const imageUrl = window.uploadedImageUrl || ""; // Đường dẫn của hình ảnh đã tải lên
+
+  if (imageUrl) {
+    // Gửi yêu cầu đến máy chủ để tạo file HTML mới
+    fetch("../php/createsharepage.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: name, imageUrl: imageUrl }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          const customShareUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
+          // Thay vì mở tab mới, sử dụng Facebook SDK để chia sẻ
+          FB.ui(
+            {
+              display: "popup",
+              method: "share",
+              href: customShareUrl, 
+            },
+            function (response) {
+              if (response && !response.error_message) {
+                console.log("Chia sẻ thành công!");
+                // Đóng modal
+                var myModal = bootstrap.Modal.getInstance(
+                  document.getElementById("invitationModal")
+                );
+                myModal.hide();
+              } else {
+                alert("Có lỗi xảy ra khi chia sẻ lên Facebook!");
+              }
+            }
+          );
+        } else {
+          alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Có lỗi xảy ra khi gửi yêu cầu tạo trang chia sẻ!");
+      });
+  } else {
+    alert("Chưa có hình ảnh để chia sẻ!");
+  }
+});

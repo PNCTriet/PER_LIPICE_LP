@@ -1,8 +1,12 @@
+let savedName = "";
 document.getElementById("infoForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
   const name = document.getElementById("nameInput").value;
   const phone = document.getElementById("phoneInput").value;
+
+  // Lưu tên vào biến cục bộ
+  savedName = name;
 
   // Tạo đối tượng để lưu trữ thông tin
   const userInfo = {
@@ -89,20 +93,40 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
           // Chuyển canvas thành URL hình ảnh
           const image = canvas.toDataURL("image/png", 1.0);
 
-          // Hiển thị hình ảnh trong modal
-          document.getElementById("invitationImage").src = image;
+          // Gửi hình ảnh đến máy chủ
+          fetch("../php/upload_image.php", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ imageData: image }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === "success") {
+                const uploadedImageUrl = data.imageUrl;
 
-          // Hiển thị modal
-          var myModal = new bootstrap.Modal(
-            document.getElementById("invitationModal")
-          );
-          myModal.show();
+                // Lưu URL hình ảnh đã tải lên để sử dụng cho chia sẻ
+                window.uploadedImageUrl = uploadedImageUrl;
 
-          // Lưu giá trị của name để dùng sau
-          window.inviteeName = name;
+                // Hiển thị modal với hình ảnh đã tải lên
+                document.getElementById("invitationImage").src =
+                  uploadedImageUrl;
+                var myModal = new bootstrap.Modal(
+                  document.getElementById("invitationModal")
+                );
+                myModal.show();
 
-          // Xóa dữ liệu trong form
-          document.getElementById("infoForm").reset();
+                // Xóa dữ liệu form
+                document.getElementById("infoForm").reset();
+              } else {
+                alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
+            });
         };
       } else {
         alert("Có lỗi xảy ra khi lưu thông tin!");
@@ -110,9 +134,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
     })
     .catch((error) => {
       console.error("Error:", error);
-      alert(
-        "Có lỗi xảy ra khi gửi dữ liệu!"
-      );
+      alert("Có lỗi xảy ra khi gửi dữ liệu!");
     });
 });
 
@@ -131,9 +153,43 @@ document
   });
 
 document.getElementById("shareButton").addEventListener("click", function () {
-  const urlToShare = "https://gody.vn/blog/trietnguyenpham7087#ban-do-viet-nam"; // URL muốn chia sẻ
-  const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-    urlToShare
-  )}`;
-  window.open(facebookShareUrl, "_blank"); // Mở một tab mới với liên kết chia sẻ
+  const name = window.inviteeName || savedName; // Lấy tên người dùng
+  const imageUrl = window.uploadedImageUrl || ""; // Đường dẫn của hình ảnh đã tải lên
+
+  if (imageUrl) {
+    // Gửi yêu cầu đến máy chủ để tạo file HTML mới
+    fetch("../php/createsharepage.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: name, imageUrl: imageUrl }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.status === "success") {
+          const customShareUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
+          const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+            customShareUrl
+          )}`;
+
+          // Mở tab mới để chia sẻ nội dung lên Facebook
+          window.open(facebookShareUrl, "_blank");
+
+          // Đóng modal
+          var myModal = bootstrap.Modal.getInstance(
+            document.getElementById("invitationModal")
+          );
+          myModal.hide();
+        } else {
+          alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        alert("Có lỗi xảy ra khi gửi yêu cầu tạo trang chia sẻ!");
+      });
+  } else {
+    alert("Chưa có hình ảnh để chia sẻ!");
+  }
 });

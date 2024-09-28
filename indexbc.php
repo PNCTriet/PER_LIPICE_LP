@@ -13,8 +13,8 @@
         content="https://scontent.fsgn7-2.fna.fbcdn.net/v/t39.30808-6/461186112_1731572460716082_3650692345729793542_n.jpg?_nc_cat=106&ccb=1-7&_nc_sid=833d8c&_nc_ohc=xl_wib6kswEQ7kNvgG7iI9v&_nc_ht=scontent.fsgn7-2>
     />
     <meta
-      property=" og:url"
-        content="https://pnctriet.github.io/PER_LIPICE_LP" />
+      property="og:url"
+      content="https://lipice-event.com.vn" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link

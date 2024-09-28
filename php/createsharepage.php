@@ -22,7 +22,7 @@ if (isset($data['name']) && isset($data['imageUrl'])) {
         <meta property="og:title" content="LipIce gửi lời mời tới ' . htmlspecialchars($name) . '!" />
         <meta property="og:description" content="' . htmlspecialchars($name) . ' có hẹn với Lọ Lem!" />
         <meta property="og:image" content="' . htmlspecialchars($imageUrl) . '" />
-        <meta property="og:url" content="https://lipice-event.com.vn/share?name=' . urlencode($name) . '&image=' . urlencode($imageUrl) . '" />
+        <meta property="og:url" content="https://20.189.113.224/share?name=' . urlencode($name) . '&image=' . urlencode($imageUrl) . '" />
         <title>Lời mời từ ' . htmlspecialchars($name) . '</title>
         <!-- Chuyển hướng ngay lập tức -->
         <script>

@@ -313,6 +313,7 @@
   #invitationImage {
     max-width: 75%;
     height: auto;
+    justify-content: center;
   }
 
   /* Tắt viền phân cách giữa modal header và body */

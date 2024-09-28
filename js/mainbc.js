@@ -152,6 +152,15 @@ document
     document.body.removeChild(link);
   });
 
+// Đảm bảo rằng Facebook SDK đã được thêm vào trang
+window.fbAsyncInit = function () {
+  FB.init({
+    appId: "1047271863230415", // Thay bằng App ID của bạn từ Facebook Developer
+    xfbml: true,
+    version: "v13.0", // Phiên bản của SDK
+  });
+};
+
 document.getElementById("shareButton").addEventListener("click", function () {
   const name = window.inviteeName || savedName; // Lấy tên người dùng
   const imageUrl = window.uploadedImageUrl || ""; // Đường dẫn của hình ảnh đã tải lên
@@ -169,18 +178,26 @@ document.getElementById("shareButton").addEventListener("click", function () {
       .then((data) => {
         if (data.status === "success") {
           const customShareUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
-          const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-            customShareUrl
-          )}`;
 
-          // Mở tab mới để chia sẻ nội dung lên Facebook
-          window.open(facebookShareUrl, "_blank");
-
-          // Đóng modal
-          var myModal = bootstrap.Modal.getInstance(
-            document.getElementById("invitationModal")
+          // Thay vì mở tab mới, sử dụng Facebook SDK để chia sẻ
+          FB.ui(
+            {
+              display: "popup",
+              method: "share",
+              href: customShareUrl, // URL tùy chỉnh của bạn
+            },
+            function (response) {
+              if (response && !response.error_message) {
+                // Xử lý sau khi chia sẻ thành công (nếu cần)
+                console.log("Chia sẻ thành công!");
+              } 
+            }
           );
-          myModal.hide();
+          // Đóng modal sau khi chia sẻ
+          // var myModal = bootstrap.Modal.getInstance(
+          //   document.getElementById("invitationModal")
+          // );
+          // myModal.hide();
         } else {
           alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
         }

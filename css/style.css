@@ -359,6 +359,9 @@
   /* Responsive for mobile */
 
   @media (max-width: 600px) {
+    .modal-content {
+      max-width: 300 ;
+    }
     #homeimg.himg {
       height: 48%;
     }

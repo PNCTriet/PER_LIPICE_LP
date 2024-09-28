@@ -114,7 +114,7 @@
     /* Responsive for mobile */
     @media (max-width: 600px) {
       #infoForm {
-        font-size: 10px;
+        font-size: 16px;
       }
 
       .containerfr {
@@ -131,7 +131,7 @@
       }
 
       input[type="text"]{
-        font-size: 10px;
+        font-size: 16px;
       }
 
       button {

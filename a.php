@@ -64,7 +64,7 @@
         input[type="tel"] {
             width: 80%;
             padding: 10px;
-            font-size: 10px;
+            font-size: 16px;
             /* Đảm bảo font size là 16px */
             box-sizing: border-box;
         }

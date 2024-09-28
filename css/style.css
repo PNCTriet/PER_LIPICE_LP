@@ -298,10 +298,11 @@
   .modal-content {
     background-image: url("../images/bg.png");
     background-size: cover;
-    position: relative;
+    position: absolute;
     left: 50%;
     transform: translateX(-50%);
     overflow: hidden;
+    padding: env(safe-area-inset);
   }
 
   .modal-body {
@@ -360,7 +361,7 @@
 
   @media (max-width: 600px) {
     .modal-content {
-      max-width: 300 ;
+      max-width: 300;
     }
     #homeimg.himg {
       height: 48%;

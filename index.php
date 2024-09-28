@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 ,maximum-scale=1" />
   <!-- Các thẻ meta khác -->
   <link rel="icon" type="image/png" sizes="64x64" href="../images/metalogo.png" />
   <meta property="og:title" content="LIPICE CÙNG LỌ LEM" />

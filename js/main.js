@@ -2,6 +2,9 @@ let savedName = "";
 document.getElementById("infoForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
+  document.body.style.zoom = '100%'; // Đặt lại zoom
+  document.body.style.transform = 'translateX(0)'; // Đặt lại vị
+
   const name = document.getElementById("nameInput").value;
   const phone = document.getElementById("phoneInput").value;
 

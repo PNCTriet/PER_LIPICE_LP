@@ -299,6 +299,8 @@
     background-image: url("../images/bg.png");
     background-size: cover;
     position: relative;
+    left: 50%;
+    transform: translateX(-50%);
     overflow: hidden;
   }
 

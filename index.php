@@ -206,7 +206,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          
+
         </div>
 
         <div class="modal-body">
@@ -231,12 +231,15 @@
               <img src="share.svg" alt="Share" style="margin-right: 15%" />
               Share
             </button>
-            <div id="fbShareButton"></div>
             <div class="text-container">
-              <p style="font-size: calc(0.6rem + 0.3vw); color: #0026a4">
+              <p style="font-size: calc(0.6rem + 0.4vw); color: #0026a4">
                 CHIA SẺ THIỆP MỜI ĐỂ CÓ CƠ HỘI NHẬN QUÀ NHÉ!
               </p>
             </div>
+            <p id="webviewer" style="font-size: calc(0.6rem + 0.3vw); color: #1977f1; ">
+              Bạn đang trong chế độ Webviewer, hãy bấm nút share ở bên dưới nhé!
+            </p>
+            <div id="fbShareButton"></div>
           </div>
         </div>
       </div>

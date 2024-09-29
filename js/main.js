@@ -35,7 +35,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
           setTimeout(() => {
             sessionStorage.removeItem("user"); // Xóa thông tin người dùng
             alert("Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.");
-            window.location.href = "index.html"; // Quay về trang chính
+            window.location.href = "https://lipice-event.com.vn/"; // Quay về trang chính
           }, sessionDuration);
 
           // Chuyển đến trang bảo mật
@@ -130,22 +130,27 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
                 // Xóa dữ liệu form
                 document.getElementById("infoForm").reset();
               } else {
-                alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
+                //alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
               }
             })
             .catch((error) => {
               console.error("Error:", error);
-              alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
+              //alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
             });
         };
       } else {
-        alert("Có lỗi xảy ra khi lưu thông tin!");
+        //alert("Có lỗi xảy ra khi lưu thông tin!");
       }
     })
     .catch((error) => {
       console.error("Error:", error);
-      alert("Có lỗi xảy ra khi gửi dữ liệu!");
+      //alert("Có lỗi xảy ra khi gửi dữ liệu!");
     });
+
+  function isFacebookApp() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    return /fb|facebook|messenger/i.test(userAgent);
+  }
 
   // Hàm tạo trang chia sẻ
   function createSharePage(imageUrl, name) {
@@ -172,12 +177,12 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
           // Khởi tạo Facebook SDK với nút mới
           FB.XFBML.parse();
         } else {
-          alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
+          //alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
         }
       })
       .catch((error) => {
         console.error("Error:", error);
-        alert("Có lỗi xảy ra khi gửi yêu cầu tạo trang chia sẻ!");
+        //alert("Có lỗi xảy ra khi gửi yêu cầu tạo trang chia sẻ!");
       });
   }
 
@@ -189,10 +194,14 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
     if (
       fbShareButton &&
       fbShareButton.offsetWidth > 0 &&
-      fbShareButton.offsetHeight > 0 &&
+      fbShareButton.offsetHeight > 0
     ) {
-      // Nút Facebook Share đã xuất hiện -> ẩn nút "here"
-      shareButton.style.display = "none";
+      window.onload = function () {
+        if (isFacebookApp()) {
+          // Nút Facebook Share đã xuất hiện -> ẩn nút "here"
+          shareButton.style.display = "none";
+        }
+      };
       //alert("Nút Facebook Share đang hiển thị. Nút 'here' đã được ẩn.");
     } else {
       // Nút Facebook Share chưa xuất hiện -> hiển thị nút "here"

@@ -130,7 +130,7 @@
         margin-bottom: 5px;
       }
 
-      input[type="text"]{
+      input[type="text"] {
         font-size: 16px;
       }
 
@@ -143,6 +143,20 @@
 </head>
 
 <body>
+
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script>
+    (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s);
+      js.id = id;
+      js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  </script>
+
   <div class="containerfr">
     <div class="image-containerfr">
       <img src="homemb.svg" alt="Placeholder Image" />
@@ -223,45 +237,25 @@
               <img src="share.svg" alt="Share" style="margin-right: 15%" />
               Share
             </button>
+            <div id="fbShareButton"></div>
             <div class="text-container">
               <p style="font-size: calc(0.6rem + 0.3vw); color: #0026a4">
                 CHIA SẺ THIỆP MỜI ĐỂ CÓ CƠ HỘI NHẬN QUÀ NHÉ!
               </p>
             </div>
-
-            <!-- Facebook share button -->
-            <!-- Load Facebook SDK for JavaScript -->
-            <div id="fb-root"></div>
-            <script>
-              (function(d, s, id) {
-                var js, fjs = d.getElementsByTagName(s)[0];
-                if (d.getElementById(id)) return;
-                js = d.createElement(s);
-                js.id = id;
-                js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.0";
-                fjs.parentNode.insertBefore(js, fjs);
-              }(document, 'script', 'facebook-jssdk'));
-            </script>
-            <div class="fb-share-button" id="facebookShareButton" data-href="https://lipice-event.com.vn?fb=1" data-layout="button_count"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
   </div>
-
-  <script>
-    document.getElementById('changeHrefButton').onclick = function() {
-      var shareButton = document.getElementById('facebookShareButton');
-      shareButton.setAttribute('data-href', 'https://new-url.com');
-
-      // Cập nhật nút chia sẻ Facebook
-      FB.XFBML.parse(shareButton);
-    };
-  </script>
-  <script src="./js/mainbc.js"></script>
+  <script src="./js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <!-- Include Bootstrap JS and dependencies (if not included already) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
 

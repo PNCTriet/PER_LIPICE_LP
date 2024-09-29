@@ -1,4 +1,6 @@
 let savedName = "";
+let savedUrl = "";
+
 document.getElementById("infoForm").addEventListener("submit", function (e) {
   e.preventDefault();
 
@@ -31,7 +33,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
           setTimeout(() => {
             sessionStorage.removeItem("user"); // Xóa thông tin người dùng
             alert("Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.");
-            window.location.href = "index.html"; // Quay về trang chính
+            window.location.href = "https://lipice-event.com.vn/"; // Quay về trang chính
           }, sessionDuration);
 
           // Chuyển đến trang bảo mật
@@ -44,14 +46,14 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
     return; // Dừng lại không thực hiện các hành động khác
   }
 
-  // Kiểm tra ràng buộc tên (không quá 7 ký tự)
+  // Kiểm tra ràng buộc tên (không quá 11 ký tự)
   if (name.length > 11) {
     alert("Tên không được quá 11 ký tự!");
     return; // Dừng lại nếu tên không hợp lệ
   }
 
   // Kiểm tra ràng buộc số điện thoại (phải là số và có đúng 10 ký tự)
-  const phonePattern = /^[0-9]{10}$/;
+  const phonePattern = /^0[0-9]{9}$/;
   if (!phonePattern.test(phone)) {
     alert("Số điện thoại phải là số hợp lệ và có 10 chữ số!");
     return; // Dừng lại nếu số điện thoại không hợp lệ
@@ -70,72 +72,173 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
       if (data.status === "success") {
         // Nếu lưu thành công, tiếp tục tạo hình ảnh
         const img = new Image();
-        img.src = "../images/c.png"; // Đường dẫn đến hình ảnh của bạn
+        img.src = "../images/c.png"; // Đường dẫn đến hình ảnh chính của bạn
 
         img.onload = function () {
-          const canvas = document.createElement("canvas");
-          canvas.width = img.width;
-          canvas.height = img.height;
-          const ctx = canvas.getContext("2d");
+          // Canvas đầu tiên - Không có background (hiển thị trên modal)
+          const canvasWithoutBackground = document.createElement("canvas");
+          canvasWithoutBackground.width = img.width;
+          canvasWithoutBackground.height = img.height;
+          const ctxWithoutBackground = canvasWithoutBackground.getContext("2d");
 
-          // Vẽ hình ảnh lên canvas
-          ctx.drawImage(img, 0, 0);
+          // Vẽ hình ảnh chính lên canvas không có background
+          ctxWithoutBackground.drawImage(img, 0, 0);
 
-          // Thêm đoạn "${name} ơi!" lên canvas
-          ctx.font = "110pt NewFont";
-          ctx.fillStyle = "#36b1ad";
-          ctx.fillText(`${name} ơi!`, 335, 430);
+          // Thêm đoạn "${name} ơi!" lên canvas không có background
+          ctxWithoutBackground.font = "110pt NewFont";
+          ctxWithoutBackground.fillStyle = "#36b1ad";
+          ctxWithoutBackground.fillText(`${name} ơi!`, 335, 430);
 
-          ctx.font = "50pt NewFont";
-          ctx.fillStyle = "#ff0298";
-          ctx.fillText(`${name} có hẹn với Lọ Lem nè!`, 180, 535);
+          ctxWithoutBackground.font = "50pt NewFont";
+          ctxWithoutBackground.fillStyle = "#ff0298";
+          ctxWithoutBackground.fillText(
+            `${name} có hẹn với Lọ Lem nè!`,
+            180,
+            535
+          );
 
-          // Chuyển canvas thành URL hình ảnh
-          const image = canvas.toDataURL("image/png", 1.0);
+          // Chuyển canvas không có background thành URL hình ảnh
+          const imageWithoutBackground = canvasWithoutBackground.toDataURL(
+            "image/png",
+            1.0
+          );
 
-          // Gửi hình ảnh đến máy chủ
-          fetch("../php/upload_image.php", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ imageData: image }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.status === "success") {
-                const uploadedImageUrl = data.imageUrl;
+          // Hiển thị modal với hình ảnh không có background
+          document.getElementById("invitationImage").src =
+            imageWithoutBackground;
+          var myModal = new bootstrap.Modal(
+            document.getElementById("invitationModal")
+          );
+          myModal.show();
 
-                // Lưu URL hình ảnh đã tải lên để sử dụng cho chia sẻ
-                window.uploadedImageUrl = uploadedImageUrl;
+          // Khi modal hiển thị, reset form và xóa canvas không có background
+          myModal._element.addEventListener("shown.bs.modal", function () {
+            // Xóa dữ liệu form
+            document.getElementById("infoForm").reset();
 
-                // Hiển thị modal với hình ảnh đã tải lên
-                document.getElementById("invitationImage").src =
-                  uploadedImageUrl;
-                var myModal = new bootstrap.Modal(
-                  document.getElementById("invitationModal")
-                );
-                myModal.show();
+            // Xóa canvas không có background khỏi DOM
+            canvasWithoutBackground.remove();
+          });
 
-                // Xóa dữ liệu form
-                document.getElementById("infoForm").reset();
-              } else {
-                alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
-              }
+          // Canvas thứ hai - Có background (dùng cho tạo trang chia sẻ)
+          const canvasWithBackground = document.createElement("canvas");
+          canvasWithBackground.width = img.width;
+          canvasWithBackground.height = img.height;
+          const ctxWithBackground = canvasWithBackground.getContext("2d");
+
+          // Tạo một đối tượng hình nền
+          const background = new Image();
+          background.src = "../images/bg.png"; // Đường dẫn đến ảnh nền của bạn
+
+          background.onload = function () {
+            // Vẽ hình nền lên canvas có background
+            ctxWithBackground.drawImage(
+              background,
+              0,
+              0,
+              canvasWithBackground.width,
+              canvasWithBackground.height
+            );
+
+            // Vẽ hình ảnh chính lên canvas có background
+            ctxWithBackground.drawImage(img, 0, 0);
+
+            // Thêm đoạn "${name} ơi!" lên canvas có background
+            ctxWithBackground.font = "110pt NewFont";
+            ctxWithBackground.fillStyle = "#36b1ad";
+            ctxWithBackground.fillText(`${name} ơi!`, 335, 430);
+
+            ctxWithBackground.font = "50pt NewFont";
+            ctxWithBackground.fillStyle = "#ff0298";
+            ctxWithBackground.fillText(
+              `${name} có hẹn với Lọ Lem nè!`,
+              180,
+              535
+            );
+
+            // Chuyển canvas có background thành URL hình ảnh
+            const imageWithBackground = canvasWithBackground.toDataURL(
+              "image/png",
+              1.0
+            );
+
+            // Gửi hình ảnh có background đến máy chủ
+            fetch("../php/upload_image.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ imageData: imageWithBackground }),
             })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
-            });
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status === "success") {
+                  const uploadedImageUrl = data.imageUrl;
+
+                  // Lưu URL hình ảnh đã tải lên để sử dụng cho chia sẻ
+                  window.uploadedImageUrl = uploadedImageUrl;
+
+                  // Bắt đầu xử lý tạo trang chia sẻ ngay sau khi tải lên thành công
+                  createSharePage(uploadedImageUrl, name);
+
+                  // Xóa dữ liệu form
+                  document.getElementById("infoForm").reset();
+                } else {
+                  //alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+                //alert("Có lỗi xảy ra khi tải ảnh lên máy chủ!");
+              });
+          };
         };
       } else {
-        alert("Có lỗi xảy ra khi lưu thông tin!");
+        //alert("Có lỗi xảy ra khi lưu thông tin!");
       }
     })
     .catch((error) => {
       console.error("Error:", error);
-      alert("Có lỗi xảy ra khi gửi dữ liệu!");
+      //alert("Có lỗi xảy ra khi gửi dữ liệu!");
     });
+
+  function createSharePage(imageUrl, name) {
+    // Gửi yêu cầu đến máy chủ để tạo file HTML mới
+    fetch("../php/createsharepage.php", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ name: name, imageUrl: imageUrl }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (window.innerWidth < 400) {
+          // Kiểm tra nếu màn hình có chiều rộng nhỏ hơn 400px
+          if (data.status === "success") {
+            const customShareUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
+            savedUrl = customShareUrl;
+            // Tạo nút chia sẻ Facebook
+            var shareButtonHTML = `
+            <div class="fb-share-button" data-href="${customShareUrl}" data-layout="button" data-size="large"></div>`;
+            document.getElementById("fbShareButton").innerHTML =
+              shareButtonHTML;
+            FB.XFBML.parse();
+          } else {
+            // Thông báo lỗi nếu cần
+            // alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
+          }
+        } else {
+          console.log(
+            "Chiều rộng màn hình lớn hơn hoặc bằng 400px, không chạy đoạn mã."
+          );
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+        //alert("Có lỗi xảy ra khi gửi yêu cầu tạo trang chia sẻ!");
+      });
+  }
 });
 
 // Xử lý sự kiện cho nút tải về
@@ -157,56 +260,29 @@ window.fbAsyncInit = function () {
   FB.init({
     appId: "1047271863230415", // Thay bằng App ID của bạn từ Facebook Developer
     xfbml: true,
-    version: "v13.0", // Phiên bản của SDK
+    version: "v20.0", // Phiên bản của SDK
   });
 };
 
 document.getElementById("shareButton").addEventListener("click", function () {
-  const name = window.inviteeName || savedName; // Lấy tên người dùng
-  const imageUrl = window.uploadedImageUrl || ""; // Đường dẫn của hình ảnh đã tải lên
-
-  if (imageUrl) {
-    // Gửi yêu cầu đến máy chủ để tạo file HTML mới
-    fetch("../php/createsharepage.php", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name: name, imageUrl: imageUrl }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.status === "success") {
-          const customShareUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
-
-          // Thay vì mở tab mới, sử dụng Facebook SDK để chia sẻ
-          FB.ui(
-            {
-              display: "popup",
-              method: "share",
-              href: customShareUrl, // URL tùy chỉnh của bạn
-            },
-            function (response) {
-              if (response && !response.error_message) {
-                // Xử lý sau khi chia sẻ thành công (nếu cần)
-                console.log("Chia sẻ thành công!");
-              } 
-            }
-          );
-          // Đóng modal sau khi chia sẻ
-          // var myModal = bootstrap.Modal.getInstance(
-          //   document.getElementById("invitationModal")
-          // );
-          // myModal.hide();
-        } else {
-          alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
-        }
-      })
-      .catch((error) => {
-        console.error("Error:", error);
-        alert("Có lỗi xảy ra khi gửi yêu cầu tạo trang chia sẻ!");
-      });
-  } else {
-    alert("Chưa có hình ảnh để chia sẻ!");
-  }
+  const customShareUrl = savedUrl;
+  // Thay vì mở tab mới, sử dụng Facebook SDK để chia sẻ
+  FB.ui(
+    {
+      method: "share",
+      href: customShareUrl,
+    },
+    function (response) {
+      if (response && !response.error_message) {
+        console.log("Chia sẻ thành công!");
+        // Đóng modal
+        var myModal = bootstrap.Modal.getInstance(
+          document.getElementById("invitationModal")
+        );
+        myModal.hide();
+      } else {
+        //alert("Có lỗi xảy ra khi chia sẻ!");
+      }
+    }
+  );
 });

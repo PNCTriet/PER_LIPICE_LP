@@ -161,12 +161,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
             // Tạo nút chia sẻ Facebook
             var shareButtonHTML = `
             <div class="fb-share-button" data-href="${customShareUrl}" data-layout="button" data-size="large"></div>`;
-
-            // Chèn nút chia sẻ vào phần tử có ID "fbShareButton"
-            document.getElementById("fbShareButton").innerHTML =
-              shareButtonHTML;
-
-            // Khởi tạo lại Facebook SDK với nút mới
+            document.getElementById("fbShareButton").innerHTML = shareButtonHTML;
             FB.XFBML.parse();
           } else {
             // Thông báo lỗi nếu cần
@@ -183,7 +178,6 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
         //alert("Có lỗi xảy ra khi gửi yêu cầu tạo trang chia sẻ!");
       });
   }
-
   });
 
 // Xử lý sự kiện cho nút tải về

@@ -87,13 +87,15 @@
       flex: 2;
       display: flex;
       align-items: center;
+      object-fit: contain;
     }
 
     .image-containerfr img {
 
       height: auto;
       width: 100%;
-      object-fit: cover;
+      max-height: 100vh;
+      object-fit: contain;
     }
 
     @media (max-width: 900px) {
@@ -204,15 +206,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title visually-hidden" id="exampleModalLabel">
-            Thiệp mời
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            id="CloseButton"></button>
+
         </div>
 
         <div class="modal-body">
@@ -237,19 +231,36 @@
               <img src="share.svg" alt="Share" style="margin-right: 15%" />
               Share
             </button>
-            <div id="fbShareButton"></div>
             <div class="text-container">
-              <p style="font-size: calc(0.6rem + 0.3vw); color: #0026a4">
+              <p style="font-size: calc(0.6rem + 0.4vw); color: #0026a4">
                 CHIA SẺ THIỆP MỜI ĐỂ CÓ CƠ HỘI NHẬN QUÀ NHÉ!
               </p>
             </div>
+            <p id="message" style="font-size: calc(0.6rem + 0.5vw); color: #1977f1;"></p>
+            <div id="fbShareButton"></div>
           </div>
         </div>
       </div>
     </div>
   </div>
   </div>
-  <script src="./js/main.js"></script>
+  <script>
+    function isFacebookApp() {
+      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      return /fb|facebook|messenger/i.test(userAgent);
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+      const messageElement = document.getElementById('message');
+      if (isFacebookApp()) {
+        var pp = document.getElementById("shareButton");
+        pp.style.display = "none";
+        messageElement.innerText = "Bạn đang trong chế độ Facebook Webview, hãy sử dụng nút share ở bên dưới nhé!";
+      } else {
+        //messageElement.innerText = "Bạn đang truy cập trang này từ trình duyệt khác!";
+      }
+    });
+  </script>
+  <script src="./js/mainbc.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <!-- Include Bootstrap JS and dependencies (if not included already) -->

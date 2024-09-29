@@ -113,7 +113,6 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
 
                 // Bắt đầu xử lý tạo trang chia sẻ ngay sau khi tải lên thành công
                 createSharePage(uploadedImageUrl, name);
-                check();
 
                 // Hiển thị modal với hình ảnh đã tải lên
                 document.getElementById("invitationImage").src =
@@ -159,16 +158,6 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
           if (data.status === "success") {
             const customShareUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
             savedUrl = customShareUrl;
-            document.addEventListener("DOMContentLoaded", function () {
-              if (isFacebookApp() || isZaloWebview()) {
-                // Giả sử bạn có các hàm kiểm tra WebView
-                // Hiển thị thông báo
-                document.getElementById("webviewer").style.display = "block";
-              } else {
-                // Ẩn thông báo (mặc định đã ẩn do display: none)
-                document.getElementById("webviewer").style.display = "none";
-              }
-            });
             // Tạo nút chia sẻ Facebook
             var shareButtonHTML = `
             <div class="fb-share-button" data-href="${customShareUrl}" data-layout="button" data-size="large"></div>`;
@@ -185,7 +174,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
           }
         } else {
           console.log(
-            "Chiều rộng màn hình lớn hơn hoặc bằng 700px, không chạy đoạn mã."
+            "Chiều rộng màn hình lớn hơn hoặc bằng 400px, không chạy đoạn mã."
           );
         }
       })
@@ -195,26 +184,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
       });
   }
 
-  // Hàm kiểm tra ứng dụng Facebook hoặc Messenger
-  function isFacebookApp() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    return /fb|facebook|messenger/i.test(userAgent);
-  }
-
-  function check() {
-    document.addEventListener("DOMContentLoaded", function () {
-      const messageElement = document.getElementById("message");
-
-      if (isFacebookApp()) {
-        messageElement.innerText =
-          "Bạn đang truy cập trang này từ ứng dụng Facebook hoặc Messenger!";
-      } else {
-        messageElement.innerText =
-          "Bạn đang truy cập trang này từ trình duyệt khác!";
-      }
-    });
-  }
-});
+  });
 
 // Xử lý sự kiện cho nút tải về
 document

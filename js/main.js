@@ -1,10 +1,8 @@
 let savedName = "";
 let savedUrl = "";
+
 document.getElementById("infoForm").addEventListener("submit", function (e) {
   e.preventDefault();
-
-  document.body.style.zoom = "100%"; // Đặt lại zoom
-  document.body.style.transform = "translateX(0)"; // Đặt lại vị
 
   const name = document.getElementById("nameInput").value;
   const phone = document.getElementById("phoneInput").value;
@@ -116,9 +114,6 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
                 // Bắt đầu xử lý tạo trang chia sẻ ngay sau khi tải lên thành công
                 createSharePage(uploadedImageUrl, name);
 
-                // Kiểm tra sự hiện diện của nút Facebook Share
-                setTimeout(checkFbShareButtonVisibility, 1000); // Tăng thời gian delay
-
                 // Hiển thị modal với hình ảnh đã tải lên
                 document.getElementById("invitationImage").src =
                   uploadedImageUrl;
@@ -147,12 +142,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
       //alert("Có lỗi xảy ra khi gửi dữ liệu!");
     });
 
-  function isFacebookApp() {
-    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-    return /fb|facebook|messenger/i.test(userAgent);
-  }
-
-  // Hàm tạo trang chia sẻ
+  
   function createSharePage(imageUrl, name) {
     // Gửi yêu cầu đến máy chủ để tạo file HTML mới
     fetch("../php/createsharepage.php", {
@@ -166,15 +156,9 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
       .then((data) => {
         if (data.status === "success") {
           const customShareUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
-          savedUrl = customShareUrl; // Lưu URL chia sẻ
-
-          // Tạo nút chia sẻ Facebook
+          savedUrl = customShareUrl;
           var shareButtonHTML = `<div class="fb-share-button" data-href="${customShareUrl}" data-layout="button" data-size="large"></div>`;
-
-          // Chèn nút chia sẻ vào modal
           document.getElementById("fbShareButton").innerHTML = shareButtonHTML;
-
-          // Khởi tạo Facebook SDK với nút mới
           FB.XFBML.parse();
         } else {
           //alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
@@ -186,28 +170,10 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
       });
   }
 
-  // Hàm kiểm tra sự hiện diện của nút Facebook Share
-  function checkFbShareButtonVisibility() {
-    var fbShareButton = document.querySelector(".fb-share-button");
-    var shareButton = document.getElementById("shareButton");
-
-    if (
-      fbShareButton &&
-      fbShareButton.offsetWidth > 0 &&
-      fbShareButton.offsetHeight > 0
-    ) {
-      window.onload = function () {
-        if (isFacebookApp()) {
-          // Nút Facebook Share đã xuất hiện -> ẩn nút "here"
-          shareButton.style.display = "none";
-        }
-      };
-      //alert("Nút Facebook Share đang hiển thị. Nút 'here' đã được ẩn.");
-    } else {
-      // Nút Facebook Share chưa xuất hiện -> hiển thị nút "here"
-      shareButton.style.display = "inline-block";
-      //alert("Nút Facebook Share không hiển thị. Nút 'here' đang hiển thị.");
-    }
+  // Hàm kiểm tra ứng dụng Facebook hoặc Messenger
+  function isFacebookApp() {
+    const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+    return /fb|facebook|messenger/i.test(userAgent);
   }
 });
 
@@ -251,7 +217,7 @@ document.getElementById("shareButton").addEventListener("click", function () {
         );
         myModal.hide();
       } else {
-        alert("Có lỗi xảy ra khi chia sẻ!");
+        //alert("Có lỗi xảy ra khi chia sẻ!");
       }
     }
   );

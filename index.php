@@ -87,13 +87,15 @@
       flex: 2;
       display: flex;
       align-items: center;
+      object-fit: contain;
     }
 
     .image-containerfr img {
 
       height: auto;
       width: 100%;
-      object-fit: cover;
+      max-height: 100vh;
+      object-fit: contain;
     }
 
     @media (max-width: 900px) {
@@ -204,15 +206,7 @@
     <div class="modal-dialog modal-xl">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title visually-hidden" id="exampleModalLabel">
-            Thiệp mời
-          </h5>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-            id="CloseButton"></button>
+          
         </div>
 
         <div class="modal-body">

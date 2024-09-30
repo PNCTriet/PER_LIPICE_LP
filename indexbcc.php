@@ -244,17 +244,28 @@
     </div>
   </div>
   </div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0"></script>
   <script>
+    function detectOS() {
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) { return "iOS"; } return "else";
+    }
+    // Hàm kiểm tra xem đang trong Facebook App hay không
     function isFacebookApp() {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       return /fb|facebook|messenger/i.test(userAgent);
     }
+
+    // Khi DOM sẵn sàng
     document.addEventListener("DOMContentLoaded", function() {
       const messageElement = document.getElementById('message');
-      if (isFacebookApp()) {
+      const os = detectOS();
+
+      // Kiểm tra nếu đang trong Facebook App và trên iOS
+      if (isFacebookApp() && os === "iOS") {
         var pp = document.getElementById("shareButton");
         pp.style.display = "none";
-        messageElement.innerText = "Bạn đang trong chế độ Facebook Webview, hãy sử dụng nút share ở bên dưới nhé!";
+        messageElement.innerText = "Bạn đang truy cập từ Facebook Webview trên iOS, hãy sử dụng nút share ở bên dưới nhé!";
       } else {
         //messageElement.innerText = "Bạn đang truy cập trang này từ trình duyệt khác!";
       }

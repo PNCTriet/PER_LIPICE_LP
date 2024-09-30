@@ -199,15 +199,19 @@ window.fbAsyncInit = function () {
   FB.init({
     appId: "1047271863230415", // Thay bằng App ID của bạn từ Facebook Developer
     xfbml: true,
-    version: "v20.0", // Phiên bản của SDK
+    version: "v3.2", // Phiên bản của SDK
   });
 };
 
 document.getElementById("shareButton").addEventListener("click", function () {
   const customShareUrl = savedUrl;
+  console.log(
+    customShareUrl 
+  );
   // Thay vì mở tab mới, sử dụng Facebook SDK để chia sẻ
   FB.ui(
     {
+      display: "popup",
       method: "share",
       href: customShareUrl,
     },

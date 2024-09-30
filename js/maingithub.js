@@ -171,7 +171,7 @@ document
   });
 
 document.getElementById("shareButton").addEventListener("click", function () {
-  const urlToShare = "https://gody.vn/blog/trietnguyenpham7087#ban-do-viet-nam"; // URL muốn chia sẻ
+  const urlToShare = "https://lipice-event.com.vn/uploadshare/invite_1727659046.html"; // URL muốn chia sẻ
   const facebookShareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
     urlToShare
   )}`;

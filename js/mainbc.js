@@ -249,26 +249,27 @@ document
 
     const link = document.createElement("a");
     link.href = image;
-    link.download = "invitation_edited.jpg";
+    link.download = "invitation_edited";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
   });
 
 // Đảm bảo rằng Facebook SDK đã được thêm vào trang
-window.fbAsyncInit = function () {
+window.fbAsyncInit = function() {
   FB.init({
-    appId: "1047271863230415", // Thay bằng App ID của bạn từ Facebook Developer
-    xfbml: true,
-    version: "v20.0", // Phiên bản của SDK
+      appId: '1047271863230415', // ID ứng dụng của bạn
+      cookie: true,
+      xfbml: true,
+      version: 'v10.0'
   });
 };
-
 document.getElementById("shareButton").addEventListener("click", function () {
   const customShareUrl = savedUrl;
   // Thay vì mở tab mới, sử dụng Facebook SDK để chia sẻ
   FB.ui(
     {
+      display: "popup",
       method: "share",
       href: customShareUrl,
     },

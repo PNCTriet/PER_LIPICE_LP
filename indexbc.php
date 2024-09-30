@@ -14,11 +14,10 @@
   <meta
     property="og:url"
     content="https://lipice-event.com.vn" />
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet" />
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
   <link rel="stylesheet" href="css/style.css" />
   <title>Bạn có hẹn cùng Lọ Lem</title>
   <style>
@@ -246,26 +245,16 @@
   </div>
   <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0"></script>
   <script>
-    function detectOS() {
-      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) { return "iOS"; } return "else";
-    }
-    // Hàm kiểm tra xem đang trong Facebook App hay không
     function isFacebookApp() {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       return /fb|facebook|messenger/i.test(userAgent);
     }
-
-    // Khi DOM sẵn sàng
     document.addEventListener("DOMContentLoaded", function() {
       const messageElement = document.getElementById('message');
-      const os = detectOS();
-
-      // Kiểm tra nếu đang trong Facebook App và trên iOS
-      if (isFacebookApp() && os === "iOS") {
+      if (isFacebookApp()) {
         var pp = document.getElementById("shareButton");
         pp.style.display = "none";
-        messageElement.innerText = "Bạn đang truy cập từ Facebook Webview trên iOS, hãy sử dụng nút share ở bên dưới nhé!";
+        messageElement.innerText = "Bạn đang trong chế độ Facebook Webview, hãy sử dụng nút share ở bên dưới nhé!";
       } else {
         //messageElement.innerText = "Bạn đang truy cập trang này từ trình duyệt khác!";
       }

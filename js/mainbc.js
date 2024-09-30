@@ -218,7 +218,6 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
           // Kiểm tra nếu màn hình có chiều rộng nhỏ hơn 400px
           if (data.status === "success") {
             const customShareUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
-            savedUrl = customShareUrl;
             // Tạo nút chia sẻ Facebook
             var shareButtonHTML = `
             <div class="fb-share-button" data-href="${customShareUrl}" data-layout="button" data-size="large"></div>`;
@@ -229,6 +228,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
             // Thông báo lỗi nếu cần
             // alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
           }
+          savedUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
         } else {
           console.log(
             "Chiều rộng màn hình lớn hơn hoặc bằng 400px, không chạy đoạn mã."

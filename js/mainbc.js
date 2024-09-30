@@ -214,9 +214,9 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (window.innerWidth < 400) {
+        if (data.status === "success") {
           // Kiểm tra nếu màn hình có chiều rộng nhỏ hơn 400px
-          if (data.status === "success") {
+          if (window.innerWidth < 400) {
             const customShareUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
             // Tạo nút chia sẻ Facebook
             var shareButtonHTML = `

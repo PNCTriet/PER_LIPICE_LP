@@ -228,7 +228,12 @@
               Download
             </button>
             <button class="button" id="shareButton">
-              <img src="share.svg" alt="Share" style="margin-right: 15%" />
+              <img src="share.svg" alt="Share" style="
+                    width: 30px;
+                    height: 30px;
+                    margin-right: 3px;
+                    margin-left: 3px;
+                    margin-right: 10px" />
               Share
             </button>
             <div class="text-container">
@@ -248,7 +253,10 @@
   <script>
     function detectOS() {
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) { return "iOS"; } return "else";
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+        return "iOS";
+      }
+      return "else";
     }
     // Hàm kiểm tra xem đang trong Facebook App hay không
     function isFacebookApp() {

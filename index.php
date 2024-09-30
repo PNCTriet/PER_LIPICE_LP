@@ -17,6 +17,7 @@
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet" />
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
   <link rel="stylesheet" href="css/style.css" />
   <title>Bạn có hẹn cùng Lọ Lem</title>
   <style>

@@ -177,6 +177,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
 
                   // Lưu URL hình ảnh đã tải lên để sử dụng cho chia sẻ
                   window.uploadedImageUrl = uploadedImageUrl;
+                  console.log("Custom Share URL:", uploadedImageUrl);
 
                   // Bắt đầu xử lý tạo trang chia sẻ ngay sau khi tải lên thành công
                   createSharePage(uploadedImageUrl, name);
@@ -266,6 +267,9 @@ window.fbAsyncInit = function() {
 };
 document.getElementById("shareButton").addEventListener("click", function () {
   const customShareUrl = savedUrl;
+  // Log giá trị customShareUrl ra console để kiểm tra
+  console.log("Custom Share URL:", customShareUrl);
+
   // Thay vì mở tab mới, sử dụng Facebook SDK để chia sẻ
   FB.ui(
     {

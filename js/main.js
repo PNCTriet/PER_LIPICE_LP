@@ -161,7 +161,8 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
             // Tạo nút chia sẻ Facebook
             var shareButtonHTML = `
             <div class="fb-share-button" data-href="${customShareUrl}" data-layout="button" data-size="large"></div>`;
-            document.getElementById("fbShareButton").innerHTML = shareButtonHTML;
+            document.getElementById("fbShareButton").innerHTML =
+              shareButtonHTML;
             FB.XFBML.parse();
           } else {
             // Thông báo lỗi nếu cần
@@ -178,7 +179,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
         //alert("Có lỗi xảy ra khi gửi yêu cầu tạo trang chia sẻ!");
       });
   }
-  });
+});
 
 // Xử lý sự kiện cho nút tải về
 document
@@ -197,35 +198,40 @@ document
 // Đảm bảo rằng Facebook SDK đã được thêm vào trang
 window.fbAsyncInit = function () {
   FB.init({
-    appId: "1047271863230415", // Thay bằng App ID của bạn từ Facebook Developer
+    appId: "1047271863230415",
+    cookie: true,
     xfbml: true,
-    version: "v3.2", // Phiên bản của SDK
+    version: "v10.0",
   });
 };
 
 document.getElementById("shareButton").addEventListener("click", function () {
   const customShareUrl = savedUrl;
-  console.log(
-    customShareUrl 
-  );
-  // Thay vì mở tab mới, sử dụng Facebook SDK để chia sẻ
-  FB.ui(
-    {
-      display: "popup",
-      method: "share",
-      href: customShareUrl,
-    },
-    function (response) {
-      if (response && !response.error_message) {
-        console.log("Chia sẻ thành công!");
-        // Đóng modal
-        var myModal = bootstrap.Modal.getInstance(
-          document.getElementById("invitationModal")
-        );
-        myModal.hide();
-      } else {
-        //alert("Có lỗi xảy ra khi chia sẻ!");
+  // Log giá trị customShareUrl ra console để kiểm tra
+  console.log("Custom Share URL:", customShareUrl);
+  if (customShareUrl) {
+    // Sử dụng Facebook SDK để chia sẻ URL
+    FB.ui(
+      {
+        display: "popup",
+        method: "share",
+        href: customShareUrl,
+      },
+      function (response) {
+        if (response && !response.error_message) {
+          console.log("Chia sẻ thành công!");
+          console.log("Chia sẻ thành công!");
+          // Đóng modal
+          var myModal = bootstrap.Modal.getInstance(
+            document.getElementById("invitationModal")
+          );
+          myModal.hide();
+        } else {
+          console.log("Có lỗi xảy ra khi chia sẻ!");
+        }
       }
-    }
-  );
+    );
+  } else {
+    alert("Vui lòng nhập URL để chia sẻ!");
+  }
 });

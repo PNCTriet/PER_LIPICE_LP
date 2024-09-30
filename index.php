@@ -243,6 +243,7 @@
     </div>
   </div>
   </div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0"></script>
   <script>
     function isFacebookApp() {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;

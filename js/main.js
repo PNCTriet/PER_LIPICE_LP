@@ -168,6 +168,7 @@ document.getElementById("infoForm").addEventListener("submit", function (e) {
             // alert("Có lỗi xảy ra khi tạo trang chia sẻ!");
           }
           savedUrl = `https://lipice-event.com.vn/${data.htmlUrl}`;
+          console.log("Custom Share URL:", savedUrl);
         } else {
           console.log(
             "Chiều rộng màn hình lớn hơn hoặc bằng 400px, không chạy đoạn mã."
@@ -207,7 +208,8 @@ window.fbAsyncInit = function () {
 };
 
 document.getElementById("shareButton").addEventListener("click", function () {
-  const customShareUrl = savedUrl;
+  let customShareUrl = savedUrl;
+  //let customShareUrl = "https://lipice-event.com.vn/../uploadshare/invite_1727665826.html"
   // Log giá trị customShareUrl ra console để kiểm tra
   console.log("Custom Share URL:", customShareUrl);
   if (customShareUrl) {
@@ -221,14 +223,13 @@ document.getElementById("shareButton").addEventListener("click", function () {
       function (response) {
         if (response && !response.error_message) {
           console.log("Chia sẻ thành công!");
-          console.log("Chia sẻ thành công!");
           // Đóng modal
           var myModal = bootstrap.Modal.getInstance(
             document.getElementById("invitationModal")
           );
           myModal.hide();
         } else {
-          console.log("Có lỗi xảy ra khi chia sẻ!");
+          //console.log("Có lỗi xảy ra khi chia sẻ!");
         }
       }
     );

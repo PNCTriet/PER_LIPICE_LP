@@ -14,10 +14,11 @@
   <meta
     property="og:url"
     content="https://lipice-event.com.vn" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet" />
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
   <link rel="stylesheet" href="css/style.css" />
   <title>Bạn có hẹn cùng Lọ Lem</title>
   <style>
@@ -235,7 +236,7 @@
                 CHIA SẺ THIỆP MỜI ĐỂ CÓ CƠ HỘI NHẬN QUÀ NHÉ!
               </p>
             </div>
-            <p id="message" style="font-size: calc(0.6rem + 0.5vw); color: #1977f1;"></p>
+            <p id="message" style="font-size: calc(0.6rem + 0.5vw); color: #1977f1; justify-content: center; text-align:center;"></p>
             <div id="fbShareButton"></div>
           </div>
         </div>
@@ -243,24 +244,34 @@
     </div>
   </div>
   </div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
   <script>
+    function detectOS() {
+      var userAgent = navigator.userAgent || navigator.vendor || window.opera;
+      if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) { return "iOS"; } return "else";
+    }
+    // Hàm kiểm tra xem đang trong Facebook App hay không
     function isFacebookApp() {
       const userAgent = navigator.userAgent || navigator.vendor || window.opera;
       return /fb|facebook|messenger/i.test(userAgent);
     }
+
+    // Khi DOM sẵn sàng
     document.addEventListener("DOMContentLoaded", function() {
       const messageElement = document.getElementById('message');
-      if (isFacebookApp()) {
+      const os = detectOS();
+
+      // Kiểm tra nếu đang trong Facebook App và trên iOS
+      if (isFacebookApp() && os === "iOS") {
         var pp = document.getElementById("shareButton");
         pp.style.display = "none";
-        messageElement.innerText = "Bạn đang trong chế độ Facebook Webview, hãy sử dụng nút share ở bên dưới nhé!";
+        messageElement.innerText = "Bạn đang truy cập từ Facebook Webview trên AppleOS, hãy sử dụng nút share ở bên dưới nhé!";
       } else {
         //messageElement.innerText = "Bạn đang truy cập trang này từ trình duyệt khác!";
       }
     });
   </script>
-  <script src="./js/mainbc.js"></script>
+  <script src="./js/main.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <!-- Include Bootstrap JS and dependencies (if not included already) -->

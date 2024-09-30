@@ -236,7 +236,7 @@
                 CHIA SẺ THIỆP MỜI ĐỂ CÓ CƠ HỘI NHẬN QUÀ NHÉ!
               </p>
             </div>
-            <p id="message" style="font-size: calc(0.6rem + 0.5vw); color: #1977f1;"></p>
+            <p id="message" style="font-size: calc(0.6rem + 0.5vw); color: #1977f1; justify-content: center; text-align:center;"></p>
             <div id="fbShareButton"></div>
           </div>
         </div>
@@ -244,7 +244,7 @@
     </div>
   </div>
   </div>
-  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0"></script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
   <script>
     function detectOS() {
       var userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -265,7 +265,7 @@
       if (isFacebookApp() && os === "iOS") {
         var pp = document.getElementById("shareButton");
         pp.style.display = "none";
-        messageElement.innerText = "Bạn đang truy cập từ Facebook Webview trên iOS, hãy sử dụng nút share ở bên dưới nhé!";
+        messageElement.innerText = "Bạn đang truy cập từ Facebook Webview trên AppleOS, hãy sử dụng nút share ở bên dưới nhé!";
       } else {
         //messageElement.innerText = "Bạn đang truy cập trang này từ trình duyệt khác!";
       }
